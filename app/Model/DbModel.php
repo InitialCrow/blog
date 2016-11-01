@@ -65,7 +65,7 @@ class Db{
 			$query ="INSERT INTO $table ($column) VALUES ($bindy) $cond";
 			$stmt = $this->driver->prepare($query);
 			for($i=0; $i<count($bind); $i++){
-				$values[$i] = trim($values[$i]);
+				$values[$i] = addslashes(trim($values[$i]));
 				$stmt->bindParam(':'.$bind[$i], $values[$i]);
 			}
 			$stmt->execute();
@@ -84,7 +84,7 @@ class Db{
 		if ( $this->selectDriver === 'PDO'){
 			
 			for($i=0; $i<count($value); $i++){
-				$value[$i] = trim($value[$i]);
+				$value[$i] = addslashes(trim($value[$i]));
 				$column[$i] = trim($column[$i]);
 				if($i == count($value)-1){
 					$bindy .= $column[$i]."='".$value[$i]."'";

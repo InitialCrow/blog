@@ -220,7 +220,7 @@ $home_func =  array(
 			$content = $_POST['comment'];
 			$stmt = $db->update('comments', 'content', [$content], "WHERE id= $comment_id");
 			if($stmt!== false ){
-				header('Location: /single/'.$_SESSION['currentPost']);
+				// header('Location: /single/'.$_SESSION['currentPost']);
 			}	
 			else{
 				echo "seriously since you are trying to hack me im with you girlfriend";

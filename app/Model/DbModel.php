@@ -24,7 +24,7 @@ class Db{
 	public function select($column, $table, $cond=""){
 		$column = strip_tags($column);
 		$table = strip_tags($table);
-		if (preg_match('/[\'^£$*()}{#~?,¬]/', $cond)){
+		if (preg_match('/[£$*()}{#~?¬]/', $cond)){
 			return false;
 		}
 
@@ -78,7 +78,7 @@ class Db{
 		$column = explode(',', $column);
 		;
 		$bindy="";
-		if (preg_match('/[\'^£$*()}{#~?,_¬]/', $cond)){
+		if (preg_match('/[£$*()}{#~?¬]/', $cond)){
 			return false;
 		}
 		if ( $this->selectDriver === 'PDO'){

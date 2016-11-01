@@ -18,19 +18,25 @@
 	<?php if(!empty($comments)) {?>
 		<?php foreach ($comments as $comment) {?>
 
-			<p class="center_title"><?php echo htmlspecialchars($comment['name']); ?> say : <?php echo htmlspecialchars($comment['content']);  ?> </p>
+			<p class="center_title"><?php echo htmlspecialchars($comment['name']); ?> say : <span data-id="<?php echo $comment['id']; ?>" class="comment_val"><?php echo htmlspecialchars($comment['content']);  ?></span> <?php if($_SESSION['name'] == $comment['name']){
+			echo "<a class='update-comment btn btn-default' href='#'>modify</a>";
+		} ?></p>
 	
 	<?php }}}?>
 	<?php if($_SESSION['id_user'] == $post[0]['user_id']){
 			echo "<a class='btn btn-default' href='/update_post/".$post[0]['id']."'>edit your article</a>";
 		} ?>
-	<form action="<?php echo $_SERVER['REQUEST_URI'] ?>/comment" method="post">
-		<div class="center">
+	<form class="commentForm" action="<?php echo $_SERVER['REQUEST_URI'] ?>/comment" method="post">
+		<div class="center comment-form">
 			<div class="form-group ">
-			<textarea class="form-control" rows="3" name="comment" id="comment" placeholder="write a comment..." required></textarea>
-			<button class=" submit-btn btn btn-success">submit</button>
+				<textarea class="form-control" rows="3" name="comment" id="comment" placeholder="write a comment..." required></textarea>
+				<button class=" submit-btn btn btn-success">submit</button>
+			</div>
 		</div>
+
 	</form>
+	
 <?php include_once __DIR__."/partial/script.php"; ?>
+<script>app.updateComment();</script>
 </body>
 </html>

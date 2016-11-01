@@ -74,7 +74,7 @@ $home_func =  array(
 			$db = new Db('PDO', DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
 			$db->init();
 			$post = $db->select('*', 'posts', "WHERE id=".(int)$url_var['id']);
-			$comments = $db->select('content, name', 'comments', "WHERE post_id=".(int)$post[0]['id']);
+			$comments = $db->select('*', 'comments', "WHERE post_id=".(int)$post[0]['id']);
 			
 			if($post === false || empty($post)){
 				$post= null;
@@ -83,7 +83,7 @@ $home_func =  array(
 				
 				$comments = null;
 			}
-			
+			$_SESSION['currentPost'] = $post[0]['id'];
 			include_once './../views/single.php';
 			return exit();
 	} ,
@@ -166,6 +166,7 @@ $home_func =  array(
 			if(!empty($comment)){
 
 				$db->insert('comments', 'name, content, post_id', [$name, $comment, $post_id]);
+				header('Location: /single/'.$url_var['id']);
 			}
 			else{
 				echo "seriously since you are trying to hack me im with you girlfriend";
@@ -200,8 +201,7 @@ $home_func =  array(
 
 			$stmt = $db->update('posts', 'title, content', [$title, $post], "WHERE id= $post_id");
 			if($stmt!== false ){
-				
-
+				header('Location: /single/'.$post_id);
 			}	
 			else{
 				echo "seriously since you are trying to hack me im with you girlfriend";
@@ -210,6 +210,24 @@ $home_func =  array(
 			
 
 			return exit();
+	},
+	'update_comment'=>function(){
+			$auth = new Auth($_SESSION);
+			$auth->check($_SESSION);
+			$db = new Db('PDO', DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
+			$db->init();
+			$comment_id = (int)$_POST['comment_id'];
+			$content = $_POST['comment'];
+			$stmt = $db->update('comments', 'content', [$content], "WHERE id= $comment_id");
+			if($stmt!== false ){
+				header('Location: /single/'.$_SESSION['currentPost']);
+			}	
+			else{
+				echo "seriously since you are trying to hack me im with you girlfriend";
+				
+			}
+			return exit();
+
 	},
 	'disconect'=>function(){
 			$auth = new Auth($_SESSION);

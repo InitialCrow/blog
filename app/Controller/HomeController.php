@@ -15,5 +15,6 @@ $router->route('/sign_up',$home_func['sign_up']);
 $router->route('/write',$home_func['write']);
 $router->route('/write_up',$home_func['write_up']);
 $router->route('/single/:id/comment',$home_func['comment']);
+$router->route('/comment_update',$home_func['update_comment']);
 $router->route('/disconect',$home_func['disconect']);
 $router->end();

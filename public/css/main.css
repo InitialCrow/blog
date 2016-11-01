@@ -5,3 +5,18 @@
 textarea {
     resize: none;
 }
+li{
+	list-style: none;
+}
+.update_post{
+	float: right;
+	margin-bottom: 20px;
+}
+.comment_area{
+
+	clear: both;
+}
+.comment_area p{
+
+	padding: 10px 5px;
+}

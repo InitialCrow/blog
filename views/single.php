@@ -14,18 +14,23 @@
 
 	<?php if(!empty($post)){ ?>
 	
-	<div class="center_title"><?php echo $post[0]['content']; ?></div>
-	<?php if(!empty($comments)) {?>
-		<?php foreach ($comments as $comment) {?>
-
-			<p class="center_title"><?php echo htmlspecialchars($comment['name']); ?> say : <span data-id="<?php echo $comment['id']; ?>" class="comment_val"><?php echo htmlspecialchars($comment['content']);  ?></span> <?php if($_SESSION['name'] == $comment['name']){
-			echo "<a class='update-comment btn btn-default' href='#'>modify</a>";
-		} ?></p>
-	
-	<?php }}}?>
+	<div class="center"><?php echo $post[0]['content']; ?>
 	<?php if($_SESSION['id_user'] == $post[0]['user_id']){
-			echo "<a class='btn btn-default' href='/update_post/".$post[0]['id']."'>edit your article</a>";
+			echo "<a class='update_post btn btn-default' href='/update_post/".$post[0]['id']."'>edit your article</a>";
 		} ?>
+	</div>
+	<div class="center comment_area">
+		<?php if(!empty($comments)) {?>
+			<?php foreach ($comments as $comment) {?>
+
+				<p ><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?php echo htmlspecialchars($comment['name']); ?> say : <span data-id="<?php echo $comment['id']; ?>" class="comment_val"><?php echo htmlspecialchars($comment['content']);  ?></span> <?php if($_SESSION['name'] == $comment['name']){
+				echo "<a class='update-comment btn btn-default' href='#'>modify</a>";
+			} ?></p>
+
+		
+		<?php }}}?>
+
+	</div>
 	<form class="commentForm" action="<?php echo $_SERVER['REQUEST_URI'] ?>/comment" method="post">
 		<div class="center comment-form">
 			<div class="form-group ">

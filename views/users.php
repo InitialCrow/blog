@@ -21,7 +21,7 @@
 					<?php foreach ($users as $user ) {?>
 					<tr>
 					
-					<td><?php echo $user['name'];?></td> <td><a href="mailto:<?php echo $user['email']; ?>"><?php echo $user['email'];?></a></td>
+					<td><span class="glyphicon glyphicon-user" aria-hidden="true"></span> <?php echo $user['name'];?></td> <td><a href="mailto:<?php echo $user['email']; ?>"><?php echo $user['email'];?></a></td>
 						
 					</tr>
 					<?php } ?>

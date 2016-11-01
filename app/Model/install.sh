@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+USERNAME='root'
+PASSWORD=''
+DBNAME='blog'
+HOST='localhost'
+
+MySQL=$(cat <<EOF
+DROP DATABASE IF EXISTS $DBNAME;
+CREATE DATABASE $DBNAME DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+
+USE $DBNAME;
+
+CREATE TABLE users (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	pass VARCHAR(30) NOT NULL,
+	name VARCHAR(30) NOT NULL,
+	email VARCHAR(50)
+);
+
+CREATE TABLE posts (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	user_id INT(11) UNSIGNED,
+	content TEXT,
+	title VARCHAR(100),
+	CONSTRAINT user_id_posts_FK FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+
+);
+CREATE TABLE comments (
+	id INT(11) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+	post_id INT(11) UNSIGNED,
+	content TEXT,
+	name VARCHAR(100),
+	CONSTRAINT post_id_comments_FK FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE
+);
+
+EOF
+)
+
+echo $MySQL | mysql --user=$USERNAME --password=$PASSWORD

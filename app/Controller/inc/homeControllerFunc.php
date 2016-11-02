@@ -11,7 +11,7 @@ $home_func =  array(
 			$db = new Db('PDO', DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
 
 			$db->init();
-			$posts = $db->select('posts.content, posts.id, posts.title, users.name', 'posts, users');
+			$posts = $db->select('posts.content, posts.id, posts.title, u.name', 'posts, users As u', 'WHERE u.id= posts.user_id');
 			$comments = [];
 		
 			foreach ($posts as $post) {
@@ -73,14 +73,14 @@ $home_func =  array(
 			$auth->check($_SESSION);
 			$db = new Db('PDO', DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
 			$db->init();
-			$post = $db->select('posts.content, posts.user_id, posts.id, posts.title, users.name', 'posts, users', "WHERE posts.id=".(int)$url_var['id']);
+			$post = $db->select('p.content, p.user_id, p.id, p.title, u.name', 'posts AS p, users As u', "WHERE p.id=".(int)$url_var['id']." AND u.id = p.user_id");
+			
 			$comments = $db->select('*', 'comments', "WHERE post_id=".(int)$post[0]['id']);
 			
 			if($post === false || empty($post)){
 				$post= null;
 			}
 			if($comments === false || empty($comments)){
-				
 				$comments = null;
 			}
 			$_SESSION['currentPost'] = $post[0]['id'];
@@ -220,7 +220,7 @@ $home_func =  array(
 			$content = $_POST['comment'];
 			$stmt = $db->update('comments', 'content', [$content], "WHERE id= $comment_id");
 			if($stmt!== false ){
-				// header('Location: /single/'.$_SESSION['currentPost']);
+				header('Location: /single/'.$_SESSION['currentPost']);
 			}	
 			else{
 				echo "seriously since you are trying to hack me im with you girlfriend";

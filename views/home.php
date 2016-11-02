@@ -16,7 +16,9 @@
 			} ?>
 		
 		<li>
-			<h3><?php echo $posts[$i]['title']; ?></h3>
+			<h3><?php echo $posts[$i]['title']; ?> <span class="right"> écrit par : <?php echo $posts[$i]['name']; ?></span></h3>
+
+			
 			<?php echo $posts[$i]['content']; ?>
 				
 			<?php if (!empty($comments)) {

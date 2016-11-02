@@ -7,6 +7,8 @@
 	</header>
 	<?php if(!empty($post)){ ?>
 	<h1 class="center_title"><?php echo $post[0]['title']; ?></h1>
+	<p class="center_title right"> écrit par : <?php echo $post[0]['name']; ?></p>
+
 	<?php }else{
 		echo "dont Try to troll me I will find you and I will hack you ";
 		return;

@@ -11,7 +11,7 @@ $home_func =  array(
 			$db = new Db('PDO', DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
 
 			$db->init();
-			$posts = $db->select('content, id, title', 'posts');
+			$posts = $db->select('posts.content, posts.id, posts.title, users.name', 'posts, users');
 			$comments = [];
 		
 			foreach ($posts as $post) {
@@ -73,7 +73,7 @@ $home_func =  array(
 			$auth->check($_SESSION);
 			$db = new Db('PDO', DB_HOST, DB_DATABASE, DB_USERNAME, DB_PASSWORD);
 			$db->init();
-			$post = $db->select('*', 'posts', "WHERE id=".(int)$url_var['id']);
+			$post = $db->select('posts.content, posts.user_id, posts.id, posts.title, users.name', 'posts, users', "WHERE posts.id=".(int)$url_var['id']);
 			$comments = $db->select('*', 'comments', "WHERE post_id=".(int)$post[0]['id']);
 			
 			if($post === false || empty($post)){

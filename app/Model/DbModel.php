@@ -27,10 +27,8 @@ class Db{
 		if (preg_match('/[£$*()}{#~?¬]/', $cond)){
 			return false;
 		}
-
 		if ( $this->selectDriver === 'PDO'){
 			$query ="SELECT $column FROM $table $cond ";
-			
 			$result = $this->driver->query($query);
 			if($result !== false){
 				$result = $result->fetchAll();
